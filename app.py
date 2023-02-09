@@ -48,7 +48,7 @@ className = "Product"
 classObj = {  
     "class": "Product",
     "description": "A product catalog",
-    "vectorize": "text2vec-openai",
+    "vectorizer": "text2vec-openai",
     "properties": [
       { "dataType": ["string"],
         "description": "Id of the product object from Mongo DB",
