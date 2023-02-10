@@ -34,6 +34,20 @@ weaveClient = weaviate.Client(
         "X-OpenAI-Api-Key": OPEN_API_KEY  # Or "X-Cohere-Api-Key" or "X-HuggingFace-Api-Key" 
     }
 )
+
+# function to take images from dataset and return an array of strings
+def convertArray(str):
+  if str is None or str == "":
+     return []
+  return str.split('~')
+
+# function to clean integer data from mongo database
+def cleanIntegerData(int):
+  if int is None or int == "":
+     return 0
+  return int
+
+
 # Delete existing schema (if necessary - THIS WILL ALSO DELETE ALL OF YOUR DATA)
 weaveClient.schema.delete_all()
 
@@ -82,17 +96,17 @@ classObj = {
         "description": "Brand name of the product",
         "name": "brand"
       },
-      { "dataType": ["string"],
+      { "dataType": ["int"],
         "description": "SKU id for the product",
         "name": "skuId"
       },
-      { "dataType": ["text"],
+      { "dataType": ["number"],
         "description": "Retail price for the product",
         "name": "price"
       },
       { "dataType": ["text"],
         "description": "Indicator of current product availability",
-        "name": "in_stock"
+        "name": "inStock"
       },
       { "dataType": ["text"],
         "description": "Currency of the listed price",
@@ -106,7 +120,7 @@ classObj = {
         "description": "URL path segment",
         "name": "breadcrumbs"
       },
-      { "dataType": ["text"],
+      { "dataType": ["number"],
         "description": "Average of the total product reviews",
         "name": "averageRating"
       },
@@ -139,9 +153,7 @@ const cleanString = (str) => {
   return str.replaceAll(regex, "")
 }
 
-const convertArray = (str) => {
-  if ((str === null) || (str === "")) return []
-  return str.split('~')
+
 }
 
 """
@@ -152,26 +164,33 @@ const convertArray = (str) => {
 with weaveClient.batch as batch:
     batch.batch_size=50
     # Batch import all Questions
+    
     ids=[]
     for docs in collection.find():
+        objStr = str(docs["_id"])
+        cleanSku = cleanIntegerData(docs["sku_id"])
+        cleanRating = cleanIntegerData(docs["avg_rating"])
+        cleanReviews = cleanIntegerData(docs["total_reviews"])
+        cleanPrice = cleanIntegerData(docs["price"])
+        imageArray = convertArray(docs["images"])
         ids += [docs["_id"]]        
         properties = {
-          "objectId": docs["_id"],
+          "objectId": objStr,
           "url": docs["url"],
           "crawledAt": docs["crawled_at"],
           "source": docs["source"],
           "name": docs["name"],
-          "images": docs["images"],
+          "images": imageArray,
           "description": docs["description"],
           "brand": docs["brand"],
-          "skuId": docs["sku_id"],
-          "price": docs["price"],
+          "skuId": cleanSku,
+          "price": cleanPrice,
           "inStock": docs["in_stock"],
           "currency": docs["currency"],
           "color": docs["color"],
           "breadcrumbs": docs["breadcrumbs"],
-          "averageRating": docs["avg_rating"],
-          "totalReviews": docs["total_reviews"],
+          "averageRating": cleanRating,
+          "totalReviews": cleanReviews,
           "overview": docs["overview"],
           "specifications": docs["specifications"],
           "productId": docs["id"]
