@@ -46,7 +46,11 @@ def cleanIntegerData(int):
   if int is None or int == "":
      return 0
   return int
-
+# function to validate that string property is string
+def cleanStringData(strng):
+  if type(strng) is str:
+     return strng
+  return "not available"
 
 # Delete existing schema (if necessary - THIS WILL ALSO DELETE ALL OF YOUR DATA)
 weaveClient.schema.delete_all()
@@ -172,6 +176,7 @@ with weaveClient.batch as batch:
         cleanRating = cleanIntegerData(docs["avg_rating"])
         cleanReviews = cleanIntegerData(docs["total_reviews"])
         cleanPrice = cleanIntegerData(docs["price"])
+        cleanColor = cleanStringData(docs["color"])
         imageArray = convertArray(docs["images"])
         ids += [docs["_id"]]        
         properties = {
@@ -187,7 +192,7 @@ with weaveClient.batch as batch:
           "price": cleanPrice,
           "inStock": docs["in_stock"],
           "currency": docs["currency"],
-          "color": docs["color"],
+          "color": cleanColor,
           "breadcrumbs": docs["breadcrumbs"],
           "averageRating": cleanRating,
           "totalReviews": cleanReviews,
