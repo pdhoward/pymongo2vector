@@ -22,4 +22,23 @@ https://www.digitalocean.com/community/tutorials/processing-incoming-request-dat
 
 https://kb.objectrocket.com/mongo-db/how-to-access-and-parse-mongodb-documents-in-python-364
 
+https://product.weaviate.network/v1/objects
+
+https://product.weaviate.network/v1/schema
+
+https://modernization.weaviate.network/v1/object
+
+https://github.com/weaviate/weaviate-examples/blob/main/README.md
+
+ACTION
+https://github.com/Iheanacho-ai/weaviate-demo/blob/main/index.js
+
+https://github.com/weaviate/weaviate-javascript-client
+
+https://github.com/halvespereira/weaviate-example-app
+
+https://github.com/roguejedi1/weaviate-nextjs
+
+https://github.com/faheemsajjad65/Search-through-Weaviate-in-React
+
 
