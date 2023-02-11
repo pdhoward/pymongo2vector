@@ -8,7 +8,11 @@ Note: This uses pymongo. If an error is encountered related to SSL, your certifi
 2. rename the file .pem to .cer
 3. double click. In the dialogue box, click on install
 
-And then rerun your app
+In order to run the app 
+
+1. set up keys for weaviate and openai in the .env
+2. create the schema which describes the shape of your data based on instructions (see below)
+3. run the app
 
 ### Loading Data from GitHub Repo using Python
 
@@ -17,28 +21,14 @@ url = 'https://raw.githubusercontent.com/weaviate/weaviate-examples/main/jeopard
 resp = requests.get(url)
 data = json.loads(resp.text)
 
-### RESEARCH
-https://www.digitalocean.com/community/tutorials/processing-incoming-request-data-in-flask
+### TEMPORARY SANDBOX FILES CREATED ON WEAVIATE
 
-https://kb.objectrocket.com/mongo-db/how-to-access-and-parse-mongodb-documents-in-python-364
 
 https://product.weaviate.network/v1/objects
 
 https://product.weaviate.network/v1/schema
 
-https://modernization.weaviate.network/v1/object
 
-https://github.com/weaviate/weaviate-examples/blob/main/README.md
 
-ACTION
-https://github.com/Iheanacho-ai/weaviate-demo/blob/main/index.js
-
-https://github.com/weaviate/weaviate-javascript-client
-
-https://github.com/halvespereira/weaviate-example-app
-
-https://github.com/roguejedi1/weaviate-nextjs
-
-https://github.com/faheemsajjad65/Search-through-Weaviate-in-React
 
 
