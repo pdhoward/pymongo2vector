@@ -6,7 +6,8 @@ load_dotenv()
 
 WEAVIATE_URL = os.environ.get("WEAVIATE_PRODUCT_URL")
 OPEN_API_KEY = os.environ.get("OPENAI_API_KEY")
-
+print(OPEN_API_KEY)
+print(type(OPEN_API_KEY))
 
 client  = weaviate.Client(
   url = WEAVIATE_URL,
@@ -16,7 +17,7 @@ client  = weaviate.Client(
 )
 
 # instruction for the generative module
-generateTask = '"Summarize each of the products and provide a price for each"'
+generateTask = '"Write a Facebook ad for each product"'
 
 result = (
   client.query
@@ -25,9 +26,9 @@ result = (
     "generate(groupedResult:{ task: " + generateTask + " }) { groupedResult }"
   )
   .with_near_text({
-    "concepts": ["drills and drill bits"]
+    "concepts": ["hammers"]
   })
-  .with_limit(5)
+  .with_limit(2)
 ).do()
 
 print(result)
