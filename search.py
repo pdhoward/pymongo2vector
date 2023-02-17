@@ -28,7 +28,7 @@ result = (
   .with_near_text({
     "concepts": ["hammers"]
   })
-  .with_limit(2)
+  .with_limit(10)
 ).do()
 
 print(result)
